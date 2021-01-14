@@ -3,7 +3,7 @@ package service
 import (
 	"context"
 	
-	"plant-controller/model"
+	"plant-controller/internal/model"
 )
 
 // UserService is a service for users

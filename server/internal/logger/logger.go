@@ -6,7 +6,7 @@ import (
 	
 	"github.com/rs/zerolog"
 	
-	"plant-controller/config"
+	"plant-controller/internal/config"
 )
 
 // Logger is a logger :)

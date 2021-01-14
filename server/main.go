@@ -10,16 +10,16 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/pkg/errors"
 	
-	"plant-controller/config"
-	"plant-controller/controller"
-	"plant-controller/lib/validator"
-	"plant-controller/logger"
-	"plant-controller/service"
-	"plant-controller/store"
+	"plant-controller/internal/config"
+	"plant-controller/internal/controller"
+	"plant-controller/internal/logger"
+	"plant-controller/internal/service"
+	"plant-controller/internal/store"
+	"plant-controller/internal/validator"
 	
-	libError "plant-controller/lib/error"
 	echoLog "github.com/labstack/gommon/log"
-
+	
+	libError "plant-controller/internal/error"
 )
 
 func main() {

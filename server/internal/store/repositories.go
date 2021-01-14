@@ -3,7 +3,7 @@ package store
 import (
 	"context"
 	
-	"plant-controller/model"
+	"plant-controller/internal/model"
 )
 
 // UserRepo is a store for users

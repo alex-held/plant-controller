@@ -6,9 +6,9 @@ import (
 	
 	"github.com/pkg/errors"
 	
-	"plant-controller/lib/types"
-	"plant-controller/model"
-	"plant-controller/store"
+	"plant-controller/internal/model"
+	"plant-controller/internal/store"
+	"plant-controller/internal/types"
 )
 
 // TrayWebService ...

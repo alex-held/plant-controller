@@ -7,8 +7,8 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	
-	"plant-controller/logger"
-	"plant-controller/model"
+	"plant-controller/internal/logger"
+	"plant-controller/internal/model"
 )
 
 type TrayMongoRepo struct {

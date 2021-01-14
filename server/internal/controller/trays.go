@@ -9,10 +9,10 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/pkg/errors"
 	
-	"plant-controller/lib/types"
-	"plant-controller/logger"
-	"plant-controller/model"
-	"plant-controller/service"
+	"plant-controller/internal/logger"
+	"plant-controller/internal/model"
+	"plant-controller/internal/service"
+	"plant-controller/internal/types"
 )
 
 // TrayController ...

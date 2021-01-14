@@ -2,19 +2,18 @@ package store
 
 import (
 	"context"
-	
 	"time"
 	
 	"github.com/pkg/errors"
 	
-	"plant-controller/logger"
-	"plant-controller/store/mongo"
+	"plant-controller/internal/logger"
+	"plant-controller/internal/store/mongo"
 )
 
 // Store contains all repositories
 type Store struct {
 	Mongo *mongo.MongoDB
-	Tray        TrayRepo
+	Tray  TrayRepo
 }
 
 // New creates new store

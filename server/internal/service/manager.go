@@ -4,12 +4,12 @@ import (
 	"context"
 	"errors"
 	
-	"plant-controller/store"
+	"plant-controller/internal/store"
 )
 
 // Manager is just a collection of all services we have in the project
 type Manager struct {
-	Tray        TrayService
+	Tray TrayService
 }
 
 // NewManager creates new service manager

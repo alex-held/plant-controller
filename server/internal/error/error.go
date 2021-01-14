@@ -6,7 +6,7 @@ import (
 	
 	"github.com/labstack/echo/v4"
 	
-	"plant-controller/lib/types"
+	"plant-controller/internal/types"
 )
 
 // HTTPError is our HTTP error definition.

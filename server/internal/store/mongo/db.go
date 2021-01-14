@@ -7,7 +7,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	
-	"plant-controller/config"
+	"plant-controller/internal/config"
 )
 
 type MongoDB struct {
