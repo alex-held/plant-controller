@@ -58,6 +58,6 @@ func (g PlantWebService) Update(ctx context.Context, config *model.Plant) (*mode
 	return updated.ToApp(), err
 }
 
-func (g PlantWebService) Delete(ctx context.Context, i int) error {
-	panic("implement me")
+func (g PlantWebService) Delete(ctx context.Context, id int) error {
+	return g.store.Plant.Delete(ctx, int64(id))
 }

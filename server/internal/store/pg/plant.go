@@ -55,7 +55,7 @@ func (g PlantPGRepo) Create(ctx context.Context, name string) (*model.PlantDB, e
 		Id:   g.GetNextId(),
 		Name: name,
 	}
-	_, err := g.db.	WithContext(ctx).
+	_, err := g.db.WithContext(ctx).
 		Model(m).
 		Insert()
 	
@@ -73,7 +73,13 @@ func (g PlantPGRepo) Create(ctx context.Context, name string) (*model.PlantDB, e
 }
 
 func (g PlantPGRepo) Update(ctx context.Context, m *model.PlantDB) (*model.PlantDB, error) {
-	_, err := g.db.Model(m).Update()
+	
+	_, err := g.db.
+		WithContext(ctx).
+		Model(m).
+		WherePK().
+		Update()
+	
 	if err != nil {
 		return nil, errors.Wrapf(err, "[repo.plant.update] error updating plant")
 	}
@@ -91,8 +97,10 @@ func (g PlantPGRepo) Delete(ctx context.Context, id int64) error {
 	_, err := g.db.
 		WithContext(ctx).
 		Model(&model.PlantDB{
-		Id: id,
-	}).Delete()
+			Id: id,
+		}).
+		WherePK().
+		Delete()
 	
 	if err != nil {
 		return errors.Wrapf(err, "[repo.plant.delete] error deleting plant")

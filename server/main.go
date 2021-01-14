@@ -68,6 +68,8 @@ func run() error {
 	}
 	
 	// Middleware
+	
+//	e.Pre(middleware.AddTrailingSlash())
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 	e.Use(middleware.CORS())
@@ -100,6 +102,8 @@ func run() error {
 	plantRoutes.GET("/", plantController.GetAll)
 	plantRoutes.POST("/", plantController.Create)
 	plantRoutes.GET("/:id", plantController.Get)
+	plantRoutes.PUT("/:id", plantController.Update)
+	plantRoutes.DELETE("/:id", plantController.Delete)
 	
 	// TODO: userRoutes.DELETE("/:slot", trayController.Delete)
 	// TODO: userRoutes.PUT("/:id", trayController.Update)
