@@ -68,8 +68,6 @@ func run() error {
 	}
 	
 	// Middleware
-	
-//	e.Pre(middleware.AddTrailingSlash())
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 	e.Use(middleware.CORS())
@@ -88,6 +86,8 @@ func run() error {
 	growConfigRoutes.GET("/", growConfigController.GetAll)
 	growConfigRoutes.POST("/", growConfigController.Create)
 	growConfigRoutes.GET("/:id", growConfigController.Get)
+	growConfigRoutes.PUT("/:id", growConfigController.Update)
+	growConfigRoutes.DELETE("/:id", growConfigController.Delete)
 	
 	// growConfigRoutes.DELETE("/:id", growConfigController.Delete)
 	

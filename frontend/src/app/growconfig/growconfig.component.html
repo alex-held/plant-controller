@@ -1,0 +1,154 @@
+<h2>My GrowConfigs</h2>
+<p-toast></p-toast>
+
+<div class="card">
+	
+	<p-toolbar styleClass="p-mb-4">
+		<ng-template pTemplate="left">
+			<button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2"
+			        (click)="openNew()"></button>
+			<button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger"
+			        (click)="deleteSelectedProducts()"
+			        [disabled]="!selectedProducts || !selectedProducts.length"></button>
+		</ng-template>
+		
+		<ng-template pTemplate="right">
+			<p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import"
+			              class="p-mr-2 p-d-inline-block"></p-fileUpload>
+			<button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+		</ng-template>
+	</p-toolbar>
+	
+	<p-table  [value]="growconfigs" [rows]="10" [paginator]="true"  [rowHover]="true" dataKey="Id">
+		<ng-template pTemplate="header">
+			<tr>
+				<th style="width: 3rem">
+					<p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+				</th>
+				<th pSortableColumn="Id">Id <p-sortIcon field="Id"></p-sortIcon></th>
+				<th pSortableColumn="Title">Title <p-sortIcon field="Title"></p-sortIcon></th>
+				<th pSortableColumn="Description">Description <p-sortIcon field="Description"></p-sortIcon></th>
+				<th pSortableColumn="GerminationDays">Germination Cycle Length (days)<p-sortIcon field="GerminationDays"></p-sortIcon></th>
+				<th pSortableColumn="GrowingDays">Growing Cycle Length (days) <p-sortIcon field="GrowingDays"></p-sortIcon></th>
+				<th pSortableColumn="PlantId">PlantId <p-sortIcon field="PlantId"></p-sortIcon></th>
+				<th></th>
+			</tr>
+		</ng-template>
+		<ng-template pTemplate="body" let-growconfig>
+			<tr>
+				<td>
+					<p-tableCheckbox [value]="growconfig"></p-tableCheckbox>
+				</td>
+				<td>{{growconfig.Id}}</td>
+				<td>{{growconfig.Title}}</td>
+				<td>{{growconfig.Description}}</td>
+				<td>{{growconfig.GerminationDays}}</td>
+				<td>{{growconfig.GrowingDays}}</td>
+				<td>{{growconfig.PlantId}}</td>
+				<td>
+					<button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
+					        (click)="edit(growconfig)"></button>
+					<button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+					        (click)="delete(growconfig.Id)"></button>
+				</td>
+			</tr>
+		</ng-template>
+		
+		<ng-template pTemplate="summary">
+			<div class="p-d-flex p-ai-center p-jc-between">
+				In total there are {{growconfigs ? growconfigs.length : 0 }} growconfigs.
+			</div>
+		</ng-template>
+	</p-table>
+
+</div>
+
+
+<p-dialog [(visible)]="growconfigDialog" [style]="{width: '450px'}" header="GrowConfig Details" [modal]="true"
+          styleClass="p-fluid">
+	
+	<ng-template pTemplate="content">
+		<div class="p-field">
+			<label for="Id">Id</label>
+			<input type="text" id="Id" pInputText [(ngModel)]="growconfig.Id" required disabled/>
+		</div>
+		
+		<div class="p-field">
+			<label for="Title">Title</label>
+			<input type="text" pInputText id="Title" [(ngModel)]="growconfig.Title" required autofocus/>
+			<small class="p-invalid" *ngIf="submitted && !growconfig.Title">Title is required.</small>
+		</div>
+		
+		
+		<div class="p-field">
+			<label for="Description">Description</label>
+			<input type="text" pInputText id="Description" [(ngModel)]="growconfig.Description" required/>
+			<small class="p-invalid" *ngIf="submitted && !growconfig.Description">Description is required.</small>
+		</div>
+		
+		
+		
+		
+		<div class="p-field">
+			<label for="GerminationDays">Germination (days)</label>
+			<p-inputNumber id="GerminationDays" [(ngModel)]="growconfig.GerminationDays" required></p-inputNumber>
+			<small class="p-invalid" *ngIf="submitted && !growconfig.GerminationDays">GerminationDays is required.</small>
+		</div>
+		
+		<div class="p-field">
+			<label for="GrowingDays">Growing (days)</label>
+			<p-inputNumber id="GrowingDays" [(ngModel)]="growconfig.GrowingDays" required></p-inputNumber>
+			<small class="p-invalid" *ngIf="submitted && !growconfig.GrowingDays">GrowingDays is required.</small>
+		</div>
+		
+		
+		<div class="p-field">
+			<label for="PlantId">Plant</label>
+			<p-inputNumber id="PlantId" [(ngModel)]="growconfig.PlantId" required></p-inputNumber>
+			<small class="p-invalid" *ngIf="submitted && !growconfig.PlantId">PlantId is required.</small>
+		</div>
+		
+		
+		
+		
+		<!--
+		<div class="p-field">
+			<label class="p-mb-3">Category</label>
+			<div class="p-formgrid p-grid">
+				<div class="p-field-radiobutton p-col-6">
+					<p-radioButton id="category1" name="category" value="Accessories" [(ngModel)]="product.category"></p-radioButton>
+					<label for="category1">Accessories</label>
+				</div>
+				<div class="p-field-radiobutton p-col-6">
+					<p-radioButton id="category2" name="category" value="Clothing" [(ngModel)]="product.category"></p-radioButton>
+					<label for="category2">Clothing</label>
+				</div>
+				<div class="p-field-radiobutton p-col-6">
+					<p-radioButton id="category3" name="category" value="Electronics" [(ngModel)]="product.category"></p-radioButton>
+					<label for="category3">Electronics</label>
+				</div>
+				<div class="p-field-radiobutton p-col-6">
+					<p-radioButton id="category4" name="category" value="Fitness" [(ngModel)]="product.category"></p-radioButton>
+					<label for="category4">Fitness</label>
+				</div>
+			</div>
+		</div>
+		
+		<div class="p-formgrid p-grid">
+			<div class="p-field p-col">
+				<label for="">Price</label>
+				<p-inputNumber id="price" [(ngModel)]="product.price" mode="currency" currency="USD" locale="en-US"></p-inputNumber>
+			</div>
+			<div class="p-field p-col">
+				<label for="quantity">Quantity</label>
+				<p-inputNumber id="quantity" [(ngModel)]="product.quantity"></p-inputNumber>
+			</div>
+		</div>
+		-->
+	</ng-template>
+	
+	<ng-template pTemplate="footer">
+		<button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+		<button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
+	</ng-template>
+</p-dialog>

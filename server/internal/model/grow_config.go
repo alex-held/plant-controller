@@ -2,7 +2,7 @@ package model
 
 type GrowConfig struct {
 	Id              int64
-	Titel           string
+	Title           string
 	Description     string
 	GerminationDays int
 	GrowingDays     int
@@ -22,7 +22,7 @@ type GrowConfigDB struct {
 func (g *GrowConfig) ToDB() *GrowConfigDB {
 	return &GrowConfigDB{
 		Id:              g.Id,
-		Titel:           g.Titel,
+		Titel:           g.Title,
 		Description:     g.Description,
 		GerminationDays: g.GerminationDays,
 		GrowingDays:     g.GrowingDays,
@@ -33,7 +33,7 @@ func (g *GrowConfig) ToDB() *GrowConfigDB {
 func (g *GrowConfigDB) ToApp() *GrowConfig {
 	return &GrowConfig{
 		Id:              g.Id,
-		Titel:           g.Titel,
+		Title:           g.Titel,
 		Description:     g.Description,
 		GerminationDays: g.GerminationDays,
 		GrowingDays:     g.GrowingDays,

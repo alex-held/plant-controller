@@ -31,15 +31,23 @@ func (g GrowConfigWebService) GetAll(ctx context.Context) (res []*model.GrowConf
 }
 
 func (g GrowConfigWebService) Create(ctx context.Context, config *model.GrowConfig) (*model.GrowConfig, error) {
-	panic("implement me")
+	created, err := g.store.GrowConfig.Create(ctx, config.ToDB())
+	if err != nil {
+		return nil, errors.Wrapf(err, "[svc.growconfig.create] error creating plants in repo")
+	}
+	return created.ToApp(), err
 }
 
 func (g GrowConfigWebService) Update(ctx context.Context, config *model.GrowConfig) (*model.GrowConfig, error) {
-	panic("implement me")
+	updated, err := g.store.GrowConfig.Update(ctx, config.ToDB())
+	if err != nil {
+		return nil, err
+	}
+	return updated.ToApp(), nil
 }
 
-func (g GrowConfigWebService) Delete(ctx context.Context, i int) error {
-	panic("implement me")
+func (g GrowConfigWebService) Delete(ctx context.Context, id int) error {
+	return g.store.GrowConfig.Delete(ctx, int64(id))
 }
 
 // NewTrayWebService creates a new Tray web service

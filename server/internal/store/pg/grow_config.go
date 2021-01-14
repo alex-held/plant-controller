@@ -53,6 +53,8 @@ func (g GrowConfigPGRepo) GetAll(ctx context.Context) ([]*model.GrowConfigDB, er
 }
 
 func (g GrowConfigPGRepo) Create(ctx context.Context, gc *model.GrowConfigDB) (*model.GrowConfigDB, error) {
+	gc.Id = g.GetNextId()
+	
 	_, err := g.db.WithContext(ctx).
 		Model(gc).
 		Relation("Plant").
@@ -74,6 +76,7 @@ func (g GrowConfigPGRepo) Create(ctx context.Context, gc *model.GrowConfigDB) (*
 func (g GrowConfigPGRepo) Update(ctx context.Context, m *model.GrowConfigDB) (*model.GrowConfigDB, error) {
 	_, err := g.db.WithContext(ctx).
 		Model(m).
+		WherePK().
 		Update()
 	if err != nil {
 		return nil, errors.Wrapf(err, "[repo.growconfig.update] error updating growconfig")
@@ -92,7 +95,9 @@ func (g GrowConfigPGRepo) Delete(ctx context.Context, id int64) error {
 	_, err := g.db.WithContext(ctx).
 		Model(&model.GrowConfigDB{
 			Id: id,
-		}).Delete()
+		}).
+		WherePK().
+		Delete()
 	
 	if err != nil {
 		return errors.Wrapf(err, "[repo.growconfig.delete] error deleting growconfig")

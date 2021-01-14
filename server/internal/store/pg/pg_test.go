@@ -47,7 +47,7 @@ func TestCreatePlantAndGrowConfig(t *testing.T) {
 		panic(err)
 	}
 	alfalfaConfig := &model.GrowConfigDB{
-		PlantId:           alfalfa.Id,
+		PlantId:         alfalfa.Id,
 		Titel:           "Alfalfa Config 1",
 		Description:     "First Config",
 		GerminationDays: 3,

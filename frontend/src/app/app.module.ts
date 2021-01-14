@@ -4,8 +4,8 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {HttpClientModule} from '@angular/common/http';
 import {AppRoutingModule} from './app-routing.module';
-import { TrayComponent } from './tray/tray.component';
-import { PlantComponent } from './plant/plant.component';
+import {TrayComponent} from './tray/tray.component';
+import {PlantComponent} from './plant/plant.component';
 import {RouterModule} from '@angular/router';
 
 import {TableModule} from 'primeng/table';
@@ -24,16 +24,19 @@ import {ToolbarModule} from 'primeng/toolbar';
 import {RatingModule} from 'primeng/rating';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {InputNumberModule} from 'primeng/inputnumber';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {FormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MessageService} from "primeng/api";
+import {GrowConfigComponent} from "./growconfig/growconfig.component";
 
 @NgModule({
     declarations: [
         AppComponent,
         TrayComponent,
-        PlantComponent
+        PlantComponent,
+
+        GrowConfigComponent
     ],
     imports: [
         BrowserModule,
@@ -57,9 +60,9 @@ import {MessageService} from "primeng/api";
         RadioButtonModule,
         InputNumberModule,
         ConfirmDialogModule,
-        AppRoutingModule ,
+        AppRoutingModule,
         RouterModule,
-        TableModule  ,
+        TableModule,
         ToolbarModule
     ],
     providers: [MessageService],

@@ -91,3 +91,50 @@ func (ctr *GrowConfigController) GetAll(ctx echo.Context) error {
 	}
 	return ctx.JSON(http.StatusOK, user)
 }
+
+func (ctr *GrowConfigController) Delete(c echo.Context) error {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, errors.Wrap(err, "could not parse slot from url"))
+	}
+	
+	err = ctr.services.GrowConfig.Delete(c.Request().Context(), id)
+	if err != nil {
+		switch {
+		case errors.Cause(err) == types.ErrNotFound:
+			return echo.NewHTTPError(http.StatusNotFound, err)
+		case errors.Cause(err) == types.ErrBadRequest:
+			return echo.NewHTTPError(http.StatusBadRequest, err)
+		default:
+			return echo.NewHTTPError(http.StatusInternalServerError, errors.Wrap(err, "could not get slot"))
+		}
+	}
+	
+	return nil
+}
+
+func (ctr *GrowConfigController) Update(ctx echo.Context) error {
+	growConfig := &model.GrowConfig{}
+	err := ctx.Bind(growConfig)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, errors.Wrap(err, "could not decode growconfig data"))
+	}
+	err = ctx.Validate(growConfig)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusUnprocessableEntity, err)
+	}
+	
+	updated, err := ctr.services.GrowConfig.Update(ctx.Request().Context(), growConfig)
+	if err != nil {
+		switch {
+		case errors.Cause(err) == types.ErrBadRequest:
+			return echo.NewHTTPError(http.StatusBadRequest, err)
+		default:
+			return echo.NewHTTPError(http.StatusInternalServerError, errors.Wrap(err, "could not update plant"))
+		}
+	}
+	
+	ctr.logger.Debug().Msgf("Created plant %+v", *updated)
+	
+	return ctx.JSON(http.StatusAccepted, updated)
+}
