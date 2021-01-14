@@ -11,12 +11,14 @@ import (
 
 // Config is a config :)
 type Config struct {
-	LogLevel      string `envconfig:"LOG_LEVEL"`
-	MongoURL      string `envconfig:"MONGO_URL"`
-	MongoDatabase string `envconfig:"MONGO_DATABASE"`
-	HTTPAddr      string `envconfig:"HTTP_ADDR"`
-	GCBucket      string `envconfig:"GC_BUCKET"`
-	FilePath      string `envconfig:"FILE_PATH"`
+	LogLevel         string `envconfig:"LOG_LEVEL"`
+	MongoURL         string `envconfig:"MONGO_URL"`
+	MongoDatabase    string `envconfig:"MONGO_DATABASE"`
+	HTTPAddr         string `envconfig:"HTTP_ADDR"`
+	GCBucket         string `envconfig:"GC_BUCKET"`
+	FilePath         string `envconfig:"FILE_PATH"`
+	PgURL            string `envconfig:"PG_URL"`
+	PgMigrationsPath string `envconfig:"PG_MIGRATIONS_PATH"`
 }
 
 var (

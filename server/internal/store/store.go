@@ -8,12 +8,15 @@ import (
 	
 	"plant-controller/internal/logger"
 	"plant-controller/internal/store/mongo"
+	"plant-controller/internal/store/pg"
 )
 
 // Store contains all repositories
 type Store struct {
 	Mongo *mongo.MongoDB
+	PG *pg.DB
 	Tray  TrayRepo
+	GrowConfig GrowConfigRepo
 }
 
 // New creates new store
@@ -25,6 +28,10 @@ func New(ctx context.Context) (*Store, error) {
 		return nil, errors.Wrap(err, "mongoDB.Dial failed")
 	}
 	
+	postgres, err := pg.Dial()
+	if err != nil {
+		return nil, errors.Wrap(err, "postgresDB.Dial failed")
+	}
 	var store Store
 	
 	// Init MongoDB repositories
@@ -33,7 +40,14 @@ func New(ctx context.Context) (*Store, error) {
 		go store.KeepAlive()
 		store.Tray = mongo.NewTrayRepo(mongoDB)
 	}
-
+	
+	// Init PostgresDB repositories
+	if postgres != nil {
+		store.PG = postgres
+		go store.KeepAlive()
+		store.GrowConfig = pg.NewGrowConfigRepo(postgres)
+	}
+	
 	return &store, nil
 }
 

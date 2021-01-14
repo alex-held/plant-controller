@@ -6,7 +6,7 @@ import (
 	"plant-controller/internal/model"
 )
 
-// UserRepo is a store for users
+// UserRepo is a store for trays
 //go:generate mockery --dir . --name UserRepo --output ./mocks
 type TrayRepo interface {
 	GetTray(context.Context, int) (*model.Tray, error)
@@ -14,6 +14,15 @@ type TrayRepo interface {
 	CreateTray(context.Context, *model.Tray) (*model.Tray, error)
 	UpdateTray(context.Context, *model.Tray) (*model.Tray, error)
 	DeleteTray(context.Context, int) error
+}
+
+// GrowConfigRepo is a store for GrowConfig
+type GrowConfigRepo interface {
+	Get(context.Context, int64) (*model.GrowConfigDB, error)
+	GetAll(context.Context) ([]*model.GrowConfigDB, error)
+	Create(context.Context, *model.GrowConfigDB) (*model.GrowConfigDB, error)
+	Update(context.Context, *model.GrowConfigDB) (*model.GrowConfigDB, error)
+	Delete(context.Context, int64) error
 }
 
 /*

@@ -15,15 +15,15 @@ import (
 )
 
 // TrayController ...
-type TrayController struct {
+type GrowConfigController struct {
 	ctx      context.Context
 	services *service.Manager
 	logger   *logger.Logger
 }
 
 // NewTrays creates a new TrayController.
-func NewTrays(ctx context.Context, services *service.Manager, logger *logger.Logger) *TrayController {
-	return &TrayController{
+func NewGrowConfig(ctx context.Context, services *service.Manager, logger *logger.Logger) *GrowConfigController {
+	return &GrowConfigController{
 		ctx:      ctx,
 		services: services,
 		logger:   logger,
@@ -31,38 +31,38 @@ func NewTrays(ctx context.Context, services *service.Manager, logger *logger.Log
 }
 
 // Create creates new tray
-func (ctr *TrayController) Create(ctx echo.Context) error {
-	tray := &model.Tray{}
-	err := ctx.Bind(tray)
+func (ctr *GrowConfigController) Create(ctx echo.Context) error {
+	growConfig := &model.GrowConfig{}
+	err := ctx.Bind(growConfig)
 	if err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, errors.Wrap(err, "could not decode tray data"))
+		return echo.NewHTTPError(http.StatusBadRequest, errors.Wrap(err, "could not decode growConfig data"))
 	}
-	err = ctx.Validate(tray)
+	err = ctx.Validate(growConfig)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusUnprocessableEntity, err)
 	}
-	tray.StartDate = "time.Now()"
-	createdTray, err := ctr.services.Tray.CreateTray(ctx.Request().Context(), tray)
+	
+	createdGrowConfig, err := ctr.services.GrowConfig.CreateGrowConfig(ctx.Request().Context(), growConfig)
 	if err != nil {
 		switch {
 		case errors.Cause(err) == types.ErrBadRequest:
 			return echo.NewHTTPError(http.StatusBadRequest, err)
 		default:
-			return echo.NewHTTPError(http.StatusInternalServerError, errors.Wrap(err, "could not create tray"))
+			return echo.NewHTTPError(http.StatusInternalServerError, errors.Wrap(err, "could not create growConfig"))
 		}
 	}
 	
-	ctr.logger.Debug().Msgf("Created tray '%d'", createdTray.Slot)
+	ctr.logger.Debug().Msgf("Created growConfig %+v", *createdGrowConfig)
 	
-	return ctx.JSON(http.StatusCreated, createdTray)
+	return ctx.JSON(http.StatusCreated, createdGrowConfig)
 }
 
-func (ctr *TrayController) Get(ctx echo.Context) error {
-	slot, err := strconv.Atoi(ctx.Param("slot"))
+func (ctr *GrowConfigController) Get(ctx echo.Context) error {
+	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, errors.Wrap(err, "could not parse slot from url"))
 	}
-	user, err := ctr.services.Tray.GetTray(ctx.Request().Context(), slot)
+	user, err := ctr.services.GrowConfig.GetGrowConfig(ctx.Request().Context(), id)
 	if err != nil {
 		switch {
 		case errors.Cause(err) == types.ErrNotFound:
@@ -76,9 +76,9 @@ func (ctr *TrayController) Get(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, user)
 }
 
-func (ctr *TrayController) GetAll(ctx echo.Context) error {
-
-	user, err := ctr.services.Tray.GetAllTrays(ctx.Request().Context())
+func (ctr *GrowConfigController) GetAll(ctx echo.Context) error {
+	
+	user, err := ctr.services.GrowConfig.GetAll(ctx.Request().Context())
 	if err != nil {
 		switch {
 		case errors.Cause(err) == types.ErrNotFound:

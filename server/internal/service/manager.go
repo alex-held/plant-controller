@@ -10,6 +10,7 @@ import (
 // Manager is just a collection of all services we have in the project
 type Manager struct {
 	Tray TrayService
+	GrowConfig GrowConfigService
 }
 
 // NewManager creates new service manager
@@ -19,5 +20,6 @@ func NewManager(ctx context.Context, store *store.Store) (*Manager, error) {
 	}
 	return &Manager{
 		Tray: NewTrayWebService(ctx, store),
+		GrowConfig: NewGrowConfigWebService(ctx, store),
 	}, nil
 }

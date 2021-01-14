@@ -4,6 +4,7 @@ go 1.13
 
 require (
 	github.com/aws/aws-sdk-go v1.36.26 // indirect
+	github.com/go-pg/pg/v10 v10.7.3
 	github.com/go-playground/validator/v10 v10.4.1
 	github.com/golang/snappy v0.0.2 // indirect
 	github.com/kelseyhightower/envconfig v1.4.0
