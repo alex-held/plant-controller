@@ -7,26 +7,21 @@ import (
 	"github.com/pkg/errors"
 	
 	"plant-controller/internal/logger"
-	"plant-controller/internal/store/mongo"
 	"plant-controller/internal/store/pg"
 )
 
 // Store contains all repositories
 type Store struct {
-	Mongo *mongo.MongoDB
-	PG *pg.DB
-	Tray  TrayRepo
+	//	Mongo      *mongo.MongoDB
+	PG         *pg.DB
+	Tray       TrayRepo
+	TrayConfig TrayConfigRepo
 	GrowConfig GrowConfigRepo
+	Plant      PlantRepo
 }
 
 // New creates new store
 func New(ctx context.Context) (*Store, error) {
-
-	// connect to MongoDB
-	mongoDB, err := mongo.Dial()
-	if err != nil {
-		return nil, errors.Wrap(err, "mongoDB.Dial failed")
-	}
 	
 	postgres, err := pg.Dial()
 	if err != nil {
@@ -34,18 +29,14 @@ func New(ctx context.Context) (*Store, error) {
 	}
 	var store Store
 	
-	// Init MongoDB repositories
-	if mongoDB != nil {
-		store.Mongo = mongoDB
-		go store.KeepAlive()
-		store.Tray = mongo.NewTrayRepo(mongoDB)
-	}
-	
 	// Init PostgresDB repositories
 	if postgres != nil {
 		store.PG = postgres
 		go store.KeepAlive()
 		store.GrowConfig = pg.NewGrowConfigRepo(postgres)
+		store.TrayConfig = pg.NewTrayConfigRepo(postgres)
+		store.Tray = pg.NewTrayRepo(postgres)
+		store.Plant = pg.NewPlantRepo(postgres)
 	}
 	
 	return &store, nil
@@ -64,18 +55,18 @@ func (store *Store) KeepAlive() {
 		lostConnect := false
 		if store == nil {
 			lostConnect = true
-		} else if err = store.Mongo.Client.Ping(context.TODO(), nil); err != nil {
+		} else if _, err := store.PG.Exec("SELECT 1"); err != nil {
 			lostConnect = true
 		}
 		if !lostConnect {
 			continue
 		}
-		logger.Debug().Msg("[store.KeepAlive] Lost MongoDB connection. Restoring...")
-		store.Mongo, err = mongo.Dial()
+		logger.Debug().Msg("[store.KeepAlive] Lost Postgres connection. Restoring...")
+		store.PG, err = pg.Dial()
 		if err != nil {
 			logger.Err(err)
 			continue
 		}
-		logger.Debug().Msg("[store.KeepAlive] MongoDB reconnected")
+		logger.Debug().Msg("[store.KeepAlive] Postgres reconnected")
 	}
 }

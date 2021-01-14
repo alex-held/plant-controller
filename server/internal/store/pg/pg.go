@@ -54,6 +54,8 @@ func createSchema(db *pg.DB) error  {
 	models := []interface{}{
 		(*model.PlantDB) (nil),
 		(*model.GrowConfigDB) (nil),
+		(*model.TrayConfigDB) (nil),
+		(*model.TrayDB) (nil),
 	}
 	
 	for _, model := range models {

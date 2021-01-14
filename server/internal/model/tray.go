@@ -1,17 +1,11 @@
 package model
 
-import (
-	"fmt"
-)
-
 type Tray struct {
-	Id           int64
-	IsActive     bool
-	Slot         int    `json:"slot"`
-	GrowConfigId int64  `json:"grow_config_id"`
-	TrayConfigId int64  `json:"tray_config_id"`
-	Plant        string `json:"plant_type"`
-	StartDate    string `json:"start_date"`
+	Id           int64 `json:"id"`
+	IsActive     bool  `json:"is_active"`
+	Slot         int   `json:"slot"`
+	GrowConfigId int64 `json:"grow_config_id"`
+	TrayConfigId int64 `json:"tray_config_id"`
 }
 
 func (t *Tray) ToDB() *TrayDB {
@@ -29,11 +23,17 @@ type TrayDB struct {
 	Slot         int
 	IsActive     bool
 	GrowConfigId int64
-	GrowConfig   *GrowConfig `pg:"rel:has-one"`
+	GrowConfig   *GrowConfigDB `pg:"rel:has-one"`
 	TrayConfigId int64
-	TrayConfig   *TrayConfig `pg:"rel:has-one"`
+	TrayConfig   *TrayConfigDB `pg:"rel:has-one"`
 }
 
-func (t Tray) String() string {
-	return fmt.Sprintf("Id=%d; IsActive=%t; Slot=%d; Plant=%s", t.Id, t.IsActive, t.Slot, t.Plant)
+func (d *TrayDB) ToApp() *Tray {
+	return &Tray{
+		Id:           d.Id,
+		IsActive:     d.IsActive,
+		Slot:         d.Slot,
+		GrowConfigId: d.GrowConfigId,
+		TrayConfigId: d.TrayConfigId,
+	}
 }

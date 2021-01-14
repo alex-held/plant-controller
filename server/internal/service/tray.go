@@ -2,13 +2,11 @@ package service
 
 import (
 	"context"
-	"fmt"
 	
 	"github.com/pkg/errors"
 	
 	"plant-controller/internal/model"
 	"plant-controller/internal/store"
-	"plant-controller/internal/types"
 )
 
 // TrayWebService ...
@@ -16,7 +14,6 @@ type TrayWebService struct {
 	ctx   context.Context
 	store *store.Store
 }
-
 
 // NewTrayWebService creates a new Tray web service
 func NewTrayWebService(ctx context.Context, store *store.Store) *TrayWebService {
@@ -27,87 +24,51 @@ func NewTrayWebService(ctx context.Context, store *store.Store) *TrayWebService 
 }
 
 // GetTray ...
-func (svc *TrayWebService) GetTray(ctx context.Context, slot int) (*model.Tray, error) {
-	tray, err := svc.store.Tray.GetTray(ctx, slot)
+func (svc *TrayWebService) GetTray(ctx context.Context, id int) (*model.Tray, error) {
+	tray, err := svc.store.Tray.Get(ctx, int64(id))
 	if err != nil {
 		return nil, errors.Wrap(err, "svc.tray.GetTray")
 	}
-	if tray == nil {
-		return nil, errors.Wrap(types.ErrNotFound, fmt.Sprintf("Tray with slot '%d' not found", slot))
-	}
 	
-	return tray, nil
+	return tray.ToApp(), nil
 }
 
 // GetAllTrays returns all trays stored in the database
-func (svc *TrayWebService) GetAllTrays(ctx context.Context) ([]*model.Tray, error) {
-	tray, err := svc.store.Tray.GetAllTrays(ctx)
+func (svc *TrayWebService) GetAllTrays(ctx context.Context) (res []*model.Tray, err error) {
+	all, err := svc.store.Tray.GetAll(ctx)
 	if err != nil {
-		return nil, errors.Wrap(err, "svc.tray.GetAllTrays")
+		return nil, errors.Wrapf(err, "[svc.tray.getall] error loading tray from repo")
 	}
-	if tray == nil {
-		return nil, errors.Wrap(types.ErrNotFound, fmt.Sprint("No trays found"))
+	for _, i := range all {
+		res = append(res, i.ToApp())
 	}
-	
-	return tray, nil
+	return res, nil
 }
 
 // CreateTray ...
 func (svc TrayWebService) CreateTray(ctx context.Context, reqTray *model.Tray) (*model.Tray, error) {
-	_, err := svc.store.Tray.CreateTray(ctx, reqTray)
+	created, err := svc.store.Tray.Create(ctx, reqTray.ToDB())
 	if err != nil {
-		return nil, errors.Wrap(err, "svc.tray.CreateTray error")
+		return nil, errors.Wrap(err, "[svc.tray.create] error while creating tray")
 	}
-	
-	// get created tray by ID
-	createdTray, err := svc.store.Tray.GetTray(ctx, reqTray.Slot)
-	if err != nil {
-		return nil, errors.Wrap(err, "svc.tray.GetTray error")
-	}
-	
-	return createdTray, nil
+	return created.ToApp(), nil
 }
 
 // UpdateTray ...
 func (svc *TrayWebService) UpdateTray(ctx context.Context, reqTray *model.Tray) (*model.Tray, error) {
-	trayDB, err := svc.store.Tray.GetTray(ctx, reqTray.Slot)
+	updated, err := svc.store.Tray.Update(ctx, reqTray.ToDB())
 	if err != nil {
-		return nil, errors.Wrap(err, "svc.tray.GetTray error")
+		return nil, errors.Wrap(err, "[svc.tray.update] error while updating tray")
 	}
-	if trayDB == nil {
-		return nil, errors.Wrap(types.ErrNotFound, fmt.Sprintf("Tray '%d' not found", reqTray.Slot))
-	}
-	
-	// update tray
-	_, err = svc.store.Tray.UpdateTray(ctx, reqTray)
-	if err != nil {
-		return nil, errors.Wrap(err, "svc.tray.UpdateTray error")
-	}
-	
-	// get updated tray by ID
-	updatedTray, err := svc.store.Tray.GetTray(ctx, reqTray.Slot)
-	if err != nil {
-		return nil, errors.Wrap(err, "svc.tray.GetTray error")
-	}
-	
-	return updatedTray, nil
+	return updated.ToApp(), err
 }
 
 // DeleteTray ...
-func (svc *TrayWebService) DeleteTray(ctx context.Context, slot int) error {
+func (svc *TrayWebService) DeleteTray(ctx context.Context, id int) error {
 	// Check if tray exists
-	trayDB, err := svc.store.Tray.GetTray(ctx, slot)
+	err := svc.store.Tray.Delete(ctx, int64(id))
 	if err != nil {
-		return errors.Wrap(err, "svc.tray.GetTray error")
+		return errors.Wrap(err, "[svc.tray.delete] error")
 	}
-	if trayDB == nil {
-		return errors.Wrap(types.ErrNotFound, fmt.Sprintf("Tray with slot '%d' not found", slot))
-	}
-	
-	err = svc.store.Tray.DeleteTray(ctx, slot)
-	if err != nil {
-		return errors.Wrap(err, "svc.tray.DeleteTray error")
-	}
-	
 	return nil
 }

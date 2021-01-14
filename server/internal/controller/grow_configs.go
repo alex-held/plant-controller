@@ -42,7 +42,7 @@ func (ctr *GrowConfigController) Create(ctx echo.Context) error {
 		return echo.NewHTTPError(http.StatusUnprocessableEntity, err)
 	}
 	
-	createdGrowConfig, err := ctr.services.GrowConfig.CreateGrowConfig(ctx.Request().Context(), growConfig)
+	createdGrowConfig, err := ctr.services.GrowConfig.Create(ctx.Request().Context(), growConfig)
 	if err != nil {
 		switch {
 		case errors.Cause(err) == types.ErrBadRequest:
@@ -62,7 +62,7 @@ func (ctr *GrowConfigController) Get(ctx echo.Context) error {
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, errors.Wrap(err, "could not parse slot from url"))
 	}
-	user, err := ctr.services.GrowConfig.GetGrowConfig(ctx.Request().Context(), id)
+	user, err := ctr.services.GrowConfig.Get(ctx.Request().Context(), id)
 	if err != nil {
 		switch {
 		case errors.Cause(err) == types.ErrNotFound:

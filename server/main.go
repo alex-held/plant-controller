@@ -52,6 +52,7 @@ func run() error {
 	// Init controllers
 	userController := controller.NewTrays(ctx, serviceManager, l)
 	growConfigController := controller.NewGrowConfig(ctx, serviceManager, l)
+	trayConfigController := controller.NewTrayConfig(ctx, serviceManager, l)
 	
 	// Initialize Echo instance
 	e := echo.New()
@@ -86,8 +87,16 @@ func run() error {
 	growConfigRoutes.GET("/:id", growConfigController.Get)
 	// growConfigRoutes.DELETE("/:id", growConfigController.Delete)
 	
+	// GrowConfig routes
+	trayConfigRoutes := v1.Group("/trayconfig")
+	trayConfigRoutes.GET("/", trayConfigController.GetAll)
+	trayConfigRoutes.POST("/", trayConfigController.Create)
+	trayConfigRoutes.GET("/:id", trayConfigController.Get)
+	
 	// TODO: userRoutes.DELETE("/:slot", userController.Delete)
 	// TODO: userRoutes.PUT("/:id", userController.Update)
+	
+	
 /*
 	// File routes
 	fileRoutes := v1.Group("/file")

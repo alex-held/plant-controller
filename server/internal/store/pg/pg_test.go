@@ -1,4 +1,5 @@
-package pg
+package pg_test
+
 
 import (
 	"fmt"
@@ -57,7 +58,7 @@ func TestCreatePlantAndGrowConfig(t *testing.T) {
 		panic(err)
 	}
 	
-	mungo := &model.Plant{
+	mungo := &model.PlantDB{
 		Name: "Mungo",
 	}
 	_, err = db.Model(mungo).Insert()

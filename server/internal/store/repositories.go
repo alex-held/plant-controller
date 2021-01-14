@@ -9,15 +9,17 @@ import (
 // UserRepo is a store for trays
 //go:generate mockery --dir . --name UserRepo --output ./mocks
 type TrayRepo interface {
-	GetTray(context.Context, int) (*model.Tray, error)
-	GetAllTrays(context.Context) ([]*model.Tray, error)
-	CreateTray(context.Context, *model.Tray) (*model.Tray, error)
-	UpdateTray(context.Context, *model.Tray) (*model.Tray, error)
-	DeleteTray(context.Context, int) error
+	Repo
+	Get(context.Context, int64) (*model.TrayDB, error)
+	GetAll(context.Context) ([]*model.TrayDB, error)
+	Create(context.Context, *model.TrayDB) (*model.TrayDB, error)
+	Update(context.Context, *model.TrayDB) (*model.TrayDB, error)
+	Delete(context.Context, int64) error
 }
 
 // GrowConfigRepo is a store for GrowConfig
 type GrowConfigRepo interface {
+	Repo
 	Get(context.Context, int64) (*model.GrowConfigDB, error)
 	GetAll(context.Context) ([]*model.GrowConfigDB, error)
 	Create(context.Context, *model.GrowConfigDB) (*model.GrowConfigDB, error)
@@ -25,20 +27,26 @@ type GrowConfigRepo interface {
 	Delete(context.Context, int64) error
 }
 
-/*
-// FileMetaRepo is a store for files
-//go:generate mockery --dir . --name FileMetaRepo --output ./mocks
-type FileMetaRepo interface {
-	GetFileMeta(context.Context, uuid.UUID) (*model.DBFile, error)
-	CreateFileMeta(context.Context, *model.DBFile) (*model.DBFile, error)
-	UpdateFileMeta(context.Context, *model.DBFile) (*model.DBFile, error)
-	DeleteFileMeta(context.Context, uuid.UUID) error
+type Repo interface {
+	GetNextId() int64
 }
 
-// FileContentRepo is a store for file content
-//go:generate mockery --dir . --name FileContentRepo --output ./mocks
-type FileContentRepo interface {
-	Upload(context.Context, *model.DBFile, []byte) error
-	Download(context.Context, *model.DBFile) ([]byte, error)
+// GrowConfigRepo is a store for GrowConfig
+type TrayConfigRepo interface {
+	Repo
+	Get(context.Context, int64) (*model.TrayConfigDB, error)
+	GetAll(context.Context) ([]*model.TrayConfigDB, error)
+	Create(context.Context, *model.TrayConfigDB) (*model.TrayConfigDB, error)
+	Update(context.Context, *model.TrayConfigDB) (*model.TrayConfigDB, error)
+	Delete(context.Context, int64) error
 }
-*/
+
+// GrowConfigRepo is a store for GrowConfig
+type PlantRepo interface {
+	Repo
+	Get(context.Context, int64) (*model.PlantDB, error)
+	GetAll(context.Context) ([]*model.PlantDB, error)
+	Create(context.Context, string) (*model.PlantDB, error)
+	Update(context.Context, *model.PlantDB) (*model.PlantDB, error)
+	Delete(context.Context, int64) error
+}

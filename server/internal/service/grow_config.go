@@ -15,7 +15,7 @@ type GrowConfigWebService struct {
 	store *store.Store
 }
 
-func (g GrowConfigWebService) GetGrowConfig(ctx context.Context, i int) (*model.GrowConfig, error) {
+func (g GrowConfigWebService) Get(ctx context.Context, i int) (*model.GrowConfig, error) {
 	panic("implement me")
 }
 
@@ -30,15 +30,15 @@ func (g GrowConfigWebService) GetAll(ctx context.Context) (res []*model.GrowConf
 	return res, nil
 }
 
-func (g GrowConfigWebService) CreateGrowConfig(ctx context.Context, config *model.GrowConfig) (*model.GrowConfig, error) {
+func (g GrowConfigWebService) Create(ctx context.Context, config *model.GrowConfig) (*model.GrowConfig, error) {
 	panic("implement me")
 }
 
-func (g GrowConfigWebService) UpdateGrowConfig(ctx context.Context, config *model.GrowConfig) (*model.GrowConfig, error) {
+func (g GrowConfigWebService) Update(ctx context.Context, config *model.GrowConfig) (*model.GrowConfig, error) {
 	panic("implement me")
 }
 
-func (g GrowConfigWebService) DeleteGrowConfig(ctx context.Context, i int) error {
+func (g GrowConfigWebService) Delete(ctx context.Context, i int) error {
 	panic("implement me")
 }
 

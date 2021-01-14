@@ -18,9 +18,18 @@ type TrayService interface {
 
 //go:generate mockery --dir . --name GrowConfigService --output ./mocks
 type GrowConfigService interface {
-	GetGrowConfig(context.Context, int) (*model.GrowConfig, error)
+	Get(context.Context, int) (*model.GrowConfig, error)
 	GetAll(context.Context) ([]*model.GrowConfig, error)
-	CreateGrowConfig(context.Context, *model.GrowConfig) (*model.GrowConfig, error)
-	UpdateGrowConfig(context.Context, *model.GrowConfig) (*model.GrowConfig, error)
-	DeleteGrowConfig(context.Context, int) error
+	Create(context.Context, *model.GrowConfig) (*model.GrowConfig, error)
+	Update(context.Context, *model.GrowConfig) (*model.GrowConfig, error)
+	Delete(context.Context, int) error
+}
+
+//go:generate mockery --dir . --name TrayConfigService --output ./mocks
+type TrayConfigService interface {
+	Get(context.Context, int) (*model.TrayConfig, error)
+	GetAll(context.Context) ([]*model.TrayConfig, error)
+	Create(context.Context, *model.TrayConfig) (*model.TrayConfig, error)
+	Update(context.Context, *model.TrayConfig) (*model.TrayConfig, error)
+	Delete(context.Context, int) error
 }
