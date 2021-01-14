@@ -125,6 +125,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "plant-controller"
+    }
+  },
+  "defaultProject": "plant-controller",
+  "cli": {
+    "analytics": false
+  }
 }

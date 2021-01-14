@@ -50,8 +50,9 @@ func run() error {
 	}
 	
 	// Init controllers
-	userController := controller.NewTrays(ctx, serviceManager, l)
+	trayController := controller.NewTrays(ctx, serviceManager, l)
 	growConfigController := controller.NewGrowConfig(ctx, serviceManager, l)
+	plantController := controller.NewPlant(ctx, serviceManager, l)
 	trayConfigController := controller.NewTrayConfig(ctx, serviceManager, l)
 	
 	// Initialize Echo instance
@@ -69,22 +70,23 @@ func run() error {
 	// Middleware
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+	e.Use(middleware.CORS())
 	
 	// API V1
 	v1 := e.Group("/v1")
 	
-	// User routes
-	userRoutes := v1.Group("/tray")
-	userRoutes.GET("/", userController.GetAll)
-	userRoutes.POST("/", userController.Create)
-	userRoutes.GET("/:id", userController.Get)
-	
+	// Tray routes
+	trayRoutes := v1.Group("/tray")
+	trayRoutes.GET("/", trayController.GetAll)
+	trayRoutes.POST("/", trayController.Create)
+	trayRoutes.GET("/:id", trayController.Get)
 	
 	// GrowConfig routes
 	growConfigRoutes := v1.Group("/growconfig")
 	growConfigRoutes.GET("/", growConfigController.GetAll)
 	growConfigRoutes.POST("/", growConfigController.Create)
 	growConfigRoutes.GET("/:id", growConfigController.Get)
+	
 	// growConfigRoutes.DELETE("/:id", growConfigController.Delete)
 	
 	// GrowConfig routes
@@ -93,18 +95,23 @@ func run() error {
 	trayConfigRoutes.POST("/", trayConfigController.Create)
 	trayConfigRoutes.GET("/:id", trayConfigController.Get)
 	
-	// TODO: userRoutes.DELETE("/:slot", userController.Delete)
-	// TODO: userRoutes.PUT("/:id", userController.Update)
+	// GrowConfig routes
+	plantRoutes := v1.Group("/plant")
+	plantRoutes.GET("/", plantController.GetAll)
+	plantRoutes.POST("/", plantController.Create)
+	plantRoutes.GET("/:id", plantController.Get)
 	
+	// TODO: userRoutes.DELETE("/:slot", trayController.Delete)
+	// TODO: userRoutes.PUT("/:id", trayController.Update)
 	
-/*
-	// File routes
-	fileRoutes := v1.Group("/file")
-	fileRoutes.POST("/", fileController.Create)
-	fileRoutes.GET("/:id", fileController.Get)
-	fileRoutes.DELETE("/:id", fileController.Delete)
-	fileRoutes.PUT("/:id/content", fileController.Upload)
-	fileRoutes.GET("/:id/content", fileController.Download)*/
+	/*
+		// File routes
+		fileRoutes := v1.Group("/file")
+		fileRoutes.POST("/", fileController.Create)
+		fileRoutes.GET("/:id", fileController.Get)
+		fileRoutes.DELETE("/:id", fileController.Delete)
+		fileRoutes.PUT("/:id/content", fileController.Upload)
+		fileRoutes.GET("/:id/content", fileController.Download)*/
 	
 	// Start server
 	s := &http.Server{

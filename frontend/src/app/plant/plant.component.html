@@ -1,0 +1,14 @@
+<h2>My Plants</h2>
+<div>
+	<label>New Plant:
+		<input #newPlantName/>
+	</label>
+	<button (click)="add(newPlantName.value); newPlantName.value=''">
+		add plant
+	</button>
+</div>
+<ul class="plants">
+	<li *ngFor="let plant of plants">
+		<span class="badge">{{plant.Id}}</span> {{plant.Name}}
+	</li>
+</ul>

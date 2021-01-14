@@ -33,3 +33,12 @@ type TrayConfigService interface {
 	Update(context.Context, *model.TrayConfig) (*model.TrayConfig, error)
 	Delete(context.Context, int) error
 }
+
+//go:generate mockery --dir . --name PlantService --output ./mocks
+type PlantService interface {
+	Get(context.Context, int) (*model.Plant, error)
+	GetAll(context.Context) ([]*model.Plant, error)
+	Create(context.Context, string) (*model.Plant, error)
+	Update(context.Context, *model.Plant) (*model.Plant, error)
+	Delete(context.Context, int) error
+}

@@ -30,7 +30,6 @@ func (g PlantPGRepo) Get(ctx context.Context, id int64) (*model.PlantDB, error) 
 	
 	if err := g.db.WithContext(ctx).
 		Model(result).
-		Relation("Plant").
 		WherePK().
 		Select(); err != nil {
 		return nil, errors.Wrapf(err, "[repo.plant.getall] error loading plants")
@@ -44,7 +43,6 @@ func (g PlantPGRepo) GetAll(ctx context.Context) ([]*model.PlantDB, error) {
 	
 	if err := g.db.WithContext(ctx).
 		Model(&result).
-		Relation("Plant").
 		Select(); err != nil {
 		return nil, errors.Wrapf(err, "[repo.plant.getall] error loading plants")
 	}
@@ -53,13 +51,12 @@ func (g PlantPGRepo) GetAll(ctx context.Context) ([]*model.PlantDB, error) {
 }
 
 func (g PlantPGRepo) Create(ctx context.Context, name string) (*model.PlantDB, error) {
-	m := model.PlantDB{
+	m := &model.PlantDB{
 		Id:   g.GetNextId(),
 		Name: name,
 	}
 	_, err := g.db.	WithContext(ctx).
 		Model(m).
-		Relation("Plant").
 		Insert()
 	
 	if err != nil {

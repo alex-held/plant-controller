@@ -11,6 +11,7 @@ import (
 type Manager struct {
 	Tray TrayService
 	GrowConfig GrowConfigService
+	Plant PlantService
 	TrayConfig TrayConfigService
 }
 
@@ -23,5 +24,6 @@ func NewManager(ctx context.Context, store *store.Store) (*Manager, error) {
 		Tray: NewTrayWebService(ctx, store),
 		GrowConfig: NewGrowConfigWebService(ctx, store),
 		TrayConfig: NewTrayConfigWebService(ctx, store),
+		Plant: NewPlantWebService(ctx, store),
 	}, nil
 }
