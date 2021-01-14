@@ -31,7 +31,7 @@ export class PlantService {
 
 
     update(growConfig: Plant): Observable<Plant> {
-        const url = `${this.baseUrl}${growConfig.Id}`
+        const url = `${this.baseUrl}${growConfig["Id"]}`
         console.log('PUT | ' + url);
         return this.httpClient.put<Plant>(url, growConfig);
     }

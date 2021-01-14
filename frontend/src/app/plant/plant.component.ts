@@ -42,22 +42,22 @@ export class PlantComponent implements OnInit {
 
     save() {
         this.submitted = true;
-        if (this.plant['Id'] !== null) {
-            this.plantService.update(this.plant)
-                .subscribe(value => console.log(JSON.stringify(value)));
-            this.messageService.add({
-                severity: 'success',
-                summary: 'Successful',
-                detail: 'GrowConfig updated',
-                life: 3000
-            });
-        } else {
+        if (this.plant['Id'] === null || this.plant.Id === undefined) {
             this.plantService.create(this.plant)
                 .subscribe(value => console.log(JSON.stringify(value)));
             this.messageService.add({
                 severity: 'success',
                 summary: 'Successful',
                 detail: 'GrowConfig created',
+                life: 3000
+            });
+        } else {
+            this.plantService.update(this.plant)
+                .subscribe(value => console.log(JSON.stringify(value)));
+            this.messageService.add({
+                severity: 'success',
+                summary: 'Successful',
+                detail: 'GrowConfig updated',
                 life: 3000
             });
         }
