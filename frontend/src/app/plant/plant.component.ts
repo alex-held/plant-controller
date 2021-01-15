@@ -78,4 +78,7 @@ export class PlantComponent implements OnInit {
         this.submitted = false;
     }
 
+    getPlantImage(plant: Plant): string {
+        return `assets/images/plants/${plant.Name.toLocaleLowerCase()}.jpg`
+    }
 }
