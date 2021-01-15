@@ -4,12 +4,14 @@ import {PlantComponent} from './plant/plant.component';
 import {TrayComponent} from './tray/tray.component';
 import {GrowConfigComponent} from "./growconfig/growconfig.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
+import {TrayConfigComponent} from "./tray-config/tray-config.component";
 
 const routes: Routes = [
-    {path: 'plant', component: PlantComponent},
-    {path: 'growconfig', component: GrowConfigComponent},
     {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
     {path: 'dashboard', component: DashboardComponent},
+    {path: 'plant', component: PlantComponent},
+    {path: 'growconfig', component: GrowConfigComponent},
+    {path: 'trayconfig', component: TrayConfigComponent},
     {path: 'tray', component: TrayComponent},
 ];
 

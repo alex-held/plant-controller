@@ -29,19 +29,23 @@ import {FormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MessageService} from "primeng/api";
 import {GrowConfigComponent} from "./growconfig/growconfig.component";
-import { DashboardComponent } from './dashboard/dashboard.component';
+import {DashboardComponent} from './dashboard/dashboard.component';
+import {DataViewModule} from "primeng/dataview";
+import {FlexLayoutModule} from "@angular/flex-layout";
+import {TrayConfigComponent} from "./tray-config/tray-config.component";
 
 @NgModule({
     declarations: [
         AppComponent,
         TrayComponent,
         PlantComponent,
-
         GrowConfigComponent,
-
-        DashboardComponent
+        DashboardComponent,
+        TrayConfigComponent
     ],
     imports: [
+        FlexLayoutModule,
+        DataViewModule,
         BrowserModule,
         BrowserAnimationsModule,
         TableModule,

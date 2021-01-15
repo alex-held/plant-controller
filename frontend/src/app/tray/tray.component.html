@@ -1,1 +1,36 @@
-<p>tray works!</p>
+<h2>Trays</h2>
+
+
+<div class="card">
+	<p-dataView #dv [value]="trays" layout="grid" layout="grid">
+		
+		<ng-template let-tray pTemplate="gridItem">
+			<div class="p-col-12 p-md-4">
+				<div class="tray-grid-item card">
+					<div class="tray-grid-item-top">
+						<div>
+							<i class="pi pi-tag tray-category-icon"></i>
+							<span class="tray-category">{{tray.category}}</span>
+						</div>
+						<span [class]="'tray-badge status-' + tray.status.toLowerCase()">{{tray.status}}</span>
+					</div>
+					<div class="tray-grid-item-content" fxLayout="column" fxFlexAlign="justify-content">
+						<span class="p-card-title">Tray {{tray.id}}</span>
+						
+						<img class="tray-image" [src]="'assets/images/plants/' + tray.plant.toLowerCase() + '.jpg'"
+						     [alt]="tray.plant"/>
+						<div class="tray-name">{{tray.plant}}</div>
+						<div class="tray-description">{{tray.plant}}</div>
+						<!--						<p-rating [ngModel]="tray.rating" [readonly]="true" [cancel]="false"></p-rating>-->
+					</div>
+					<div class="tray-grid-item-bottom">
+						<span class="tray-price">${{tray.plant}}</span>
+						<p-button icon="pi pi-shopping-cart"
+						          [disabled]="tray.status === 'OUTOFSTOCK'"></p-button>
+					</div>
+				</div>
+			</div>
+		</ng-template>
+	</p-dataView>
+
+</div>
