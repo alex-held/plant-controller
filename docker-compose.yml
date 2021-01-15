@@ -41,4 +41,4 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=plant-controller
     volumes:
-      - ./init-db.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./data/init-db.sql:/docker-entrypoint-initdb.d/init.sql
