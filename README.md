@@ -1,5 +1,8 @@
 # Plant-Controller
 
+![frontend docker shield](https://img.shields.io/docker/v/alexheld/plant-controller-frontend?label=frontend&logo=docker&style=for-the-badge)
+![backend docker shield](https://img.shields.io/docker/v/alexheld/plant-controller-backend?label=backend&logo=docker&style=for-the-badge)
+
 ## Environment setup
 
 You need to have [Go](https://golang.org/),
