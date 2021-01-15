@@ -1,0 +1,11 @@
+<h3>Plant Controller Dashboard</h3>
+
+<div class="shortcuts grid grid-pad">
+	<a *ngFor="let shortcut of shortcuts" class="col-1-4" routerLink="{{shortcut.uri}}">
+		<div class="module shortcut">
+			<h4>{{shortcut.name}}</h4>
+		</div>
+	</a>
+	
+</div>
+

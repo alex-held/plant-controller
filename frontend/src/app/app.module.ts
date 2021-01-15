@@ -29,6 +29,7 @@ import {FormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MessageService} from "primeng/api";
 import {GrowConfigComponent} from "./growconfig/growconfig.component";
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
     declarations: [
@@ -36,7 +37,9 @@ import {GrowConfigComponent} from "./growconfig/growconfig.component";
         TrayComponent,
         PlantComponent,
 
-        GrowConfigComponent
+        GrowConfigComponent,
+
+        DashboardComponent
     ],
     imports: [
         BrowserModule,
