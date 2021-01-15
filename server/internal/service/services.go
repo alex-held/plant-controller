@@ -9,11 +9,11 @@ import (
 // UserService is a service for users
 //go:generate mockery --dir . --name TrayService --output ./mocks
 type TrayService interface {
-	GetTray(context.Context, int) (*model.Tray, error)
-	GetAllTrays(context.Context) ([]*model.Tray, error)
-	CreateTray(context.Context, *model.Tray) (*model.Tray, error)
-	UpdateTray(context.Context, *model.Tray) (*model.Tray, error)
-	DeleteTray(context.Context, int) error
+	Get(context.Context, int) (*model.Tray, error)
+	GetAll(context.Context) ([]*model.Tray, error)
+	Create(context.Context, *model.Tray) (*model.Tray, error)
+	Update(context.Context, *model.Tray) (*model.Tray, error)
+	Delete(context.Context, int) error
 }
 
 //go:generate mockery --dir . --name GrowConfigService --output ./mocks

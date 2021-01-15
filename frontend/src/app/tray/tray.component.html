@@ -1,36 +1,110 @@
-<h2>Trays</h2>
-
+<h2>My Trays</h2>
+<p-toast></p-toast>
 
 <div class="card">
-	<p-dataView #dv [value]="trays" layout="grid" layout="grid">
+	
+	<p-toolbar styleClass="p-mb-4">
+		<ng-template pTemplate="left">
+			<button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2"
+			        (click)="openNew()"></button>
+		</ng-template>
 		
-		<ng-template let-tray pTemplate="gridItem">
-			<div class="p-col-12 p-md-4">
-				<div class="tray-grid-item card">
-					<div class="tray-grid-item-top">
-						<div>
-							<i class="pi pi-tag tray-category-icon"></i>
-							<span class="tray-category">{{tray.category}}</span>
-						</div>
-						<span [class]="'tray-badge status-' + tray.status.toLowerCase()">{{tray.status}}</span>
-					</div>
-					<div class="tray-grid-item-content" fxLayout="column" fxFlexAlign="justify-content">
-						<span class="p-card-title">Tray {{tray.id}}</span>
-						
-						<img class="tray-image" [src]="'assets/images/plants/' + tray.plant.toLowerCase() + '.jpg'"
-						     [alt]="tray.plant"/>
-						<div class="tray-name">{{tray.plant}}</div>
-						<div class="tray-description">{{tray.plant}}</div>
-						<!--						<p-rating [ngModel]="tray.rating" [readonly]="true" [cancel]="false"></p-rating>-->
-					</div>
-					<div class="tray-grid-item-bottom">
-						<span class="tray-price">${{tray.plant}}</span>
-						<p-button icon="pi pi-shopping-cart"
-						          [disabled]="tray.status === 'OUTOFSTOCK'"></p-button>
-					</div>
-				</div>
+		<ng-template pTemplate="right">
+			<p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import"
+			              class="p-mr-2 p-d-inline-block"></p-fileUpload>
+			<button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+		</ng-template>
+	</p-toolbar>
+	
+	<p-table styleClass="p-datatable-xl" #dt [value]="trays" [rows]="10" [paginator]="true" [rowHover]="true"
+	         dataKey="Id">
+		<ng-template pTemplate="header">
+			<tr>
+				<th style="width: 3rem">
+					<p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+				</th>
+				
+				<th pSortableColumn="Id">Id
+					<p-sortIcon field="Id"></p-sortIcon>
+				</th>
+				<th pSortableColumn="Slot">Slot
+					<p-sortIcon field="Slot"></p-sortIcon>
+				</th>
+				<th pSortableColumn="IsActive">IsActive
+					<p-sortIcon field="IsActive"></p-sortIcon>
+				</th>
+				<th pSortableColumn="GrowConfigId">GrowConfigId
+					<p-sortIcon field="GrowConfigId"></p-sortIcon>
+				</th>
+				<th pSortableColumn="TrayConfigId">TrayConfigId
+					<p-sortIcon field="TrayConfigId"></p-sortIcon>
+				</th>
+				<th></th>
+			</tr>
+		</ng-template>
+		
+		<ng-template pTemplate="body" let-tray>
+			<tr>
+				<td>
+					<p-tableCheckbox [value]="tray"></p-tableCheckbox>
+				</td>
+				
+				<td>{{tray.id}}</td>
+				<td>{{tray.slot}}</td>
+				<td>{{tray.is_active}}</td>
+				<td>{{tray.grow_config_id}}</td>
+				<td>{{tray.tray_config_id}}</td>
+				<td>
+					<button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
+					        (click)="edit(tray)"></button>
+					<button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+					        (click)="delete(tray.Id)"></button>
+				</td>
+			</tr>
+		</ng-template>
+		
+		<ng-template pTemplate="summary">
+			<div class="p-d-flex p-ai-center p-jc-between">
+				In total there are {{trays ? trays.length : 0 }} trays.
 			</div>
 		</ng-template>
-	</p-dataView>
+	</p-table>
 
 </div>
+
+
+<p-dialog [(visible)]="trayDialog" header="Tray Details" [modal]="true" styleClass="p-fluid">
+	
+	<ng-template pTemplate="content">
+		<div class="p-field">
+			<label for="Id">Id </label>
+			<p-inputNumber id="Id" [(ngModel)]="tray.Id" required disabled></p-inputNumber>
+		</div>
+		<div class="p-field">
+			<label for="Slot">Slot </label>
+			<p-inputNumber id="Slot" [(ngModel)]="tray.Slot" required autofocus></p-inputNumber>
+			<small class="p-invalid" *ngIf="submitted && !tray.Slot">Slot is required.</small>
+		</div>
+		<div class="p-field">
+			<label for="IsActive">IsActive </label>
+			<p-toggleButton id="IsActive" [(ngModel)]="tray.IsActive" required></p-toggleButton>
+			<small class="p-invalid" *ngIf="submitted && !tray.IsActive">IsActive is required.</small>
+		</div>
+		<div class="p-field">
+			<label for="GrowConfigId">GrowConfigId </label>
+			<p-inputNumber id="GrowConfigId" [(ngModel)]="tray.GrowConfigId" required></p-inputNumber>
+			<small class="p-invalid" *ngIf="submitted && !tray.GrowConfigId">GrowConfigId is required.</small>
+		</div>
+		<div class="p-field">
+			<label for="TrayConfigId">TrayConfigId </label>
+			<p-inputNumber id="TrayConfigId" [(ngModel)]="tray.TrayConfigId" required></p-inputNumber>
+			<small class="p-invalid" *ngIf="submitted && !tray.TrayConfigId">TrayConfigId is required.</small>
+		</div>
+	</ng-template>
+	
+	<ng-template pTemplate="footer">
+		<button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+		<button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
+	</ng-template>
+</p-dialog>
+

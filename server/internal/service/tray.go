@@ -24,7 +24,7 @@ func NewTrayWebService(ctx context.Context, store *store.Store) *TrayWebService 
 }
 
 // GetTray ...
-func (svc *TrayWebService) GetTray(ctx context.Context, id int) (*model.Tray, error) {
+func (svc *TrayWebService) Get(ctx context.Context, id int) (*model.Tray, error) {
 	tray, err := svc.store.Tray.Get(ctx, int64(id))
 	if err != nil {
 		return nil, errors.Wrap(err, "svc.tray.GetTray")
@@ -34,7 +34,7 @@ func (svc *TrayWebService) GetTray(ctx context.Context, id int) (*model.Tray, er
 }
 
 // GetAllTrays returns all trays stored in the database
-func (svc *TrayWebService) GetAllTrays(ctx context.Context) (res []*model.Tray, err error) {
+func (svc *TrayWebService) GetAll(ctx context.Context) (res []*model.Tray, err error) {
 	all, err := svc.store.Tray.GetAll(ctx)
 	if err != nil {
 		return nil, errors.Wrapf(err, "[svc.tray.getall] error loading tray from repo")
@@ -46,7 +46,7 @@ func (svc *TrayWebService) GetAllTrays(ctx context.Context) (res []*model.Tray, 
 }
 
 // CreateTray ...
-func (svc TrayWebService) CreateTray(ctx context.Context, reqTray *model.Tray) (*model.Tray, error) {
+func (svc TrayWebService) Create(ctx context.Context, reqTray *model.Tray) (*model.Tray, error) {
 	created, err := svc.store.Tray.Create(ctx, reqTray.ToDB())
 	if err != nil {
 		return nil, errors.Wrap(err, "[svc.tray.create] error while creating tray")
@@ -55,7 +55,7 @@ func (svc TrayWebService) CreateTray(ctx context.Context, reqTray *model.Tray) (
 }
 
 // UpdateTray ...
-func (svc *TrayWebService) UpdateTray(ctx context.Context, reqTray *model.Tray) (*model.Tray, error) {
+func (svc *TrayWebService) Update(ctx context.Context, reqTray *model.Tray) (*model.Tray, error) {
 	updated, err := svc.store.Tray.Update(ctx, reqTray.ToDB())
 	if err != nil {
 		return nil, errors.Wrap(err, "[svc.tray.update] error while updating tray")
@@ -64,7 +64,7 @@ func (svc *TrayWebService) UpdateTray(ctx context.Context, reqTray *model.Tray) 
 }
 
 // DeleteTray ...
-func (svc *TrayWebService) DeleteTray(ctx context.Context, id int) error {
+func (svc *TrayWebService) Delete(ctx context.Context, id int) error {
 	// Check if tray exists
 	err := svc.store.Tray.Delete(ctx, int64(id))
 	if err != nil {

@@ -1,10 +1,14 @@
 version: "3.7"
 services:
-  dev_db:
-    image: mongo:4.2.3
-    environment:
-      MONGO_INITDB_DATABASE: tech
+  
+  postgres:
+    restart: always
+    image: postgres:latest
     ports:
-      - 27017:27017
+      - 5433:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=plant-controller
     volumes:
-      - ./init-db.js:/docker-entrypoint-initdb.d/init.js
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init.sql

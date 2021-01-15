@@ -73,13 +73,15 @@ func run() error {
 	e.Use(middleware.CORS())
 	
 	// API V1
-	v1 := e.Group("/v1")
+	v1 := e.Group("/api/v1")
 	
 	// Tray routes
 	trayRoutes := v1.Group("/tray")
 	trayRoutes.GET("/", trayController.GetAll)
 	trayRoutes.POST("/", trayController.Create)
 	trayRoutes.GET("/:id", trayController.Get)
+	trayRoutes.PUT("/:id", trayController.Update)
+	trayRoutes.DELETE("/:id", trayController.Delete)
 	
 	// GrowConfig routes
 	growConfigRoutes := v1.Group("/growconfig")
@@ -96,6 +98,8 @@ func run() error {
 	trayConfigRoutes.GET("/", trayConfigController.GetAll)
 	trayConfigRoutes.POST("/", trayConfigController.Create)
 	trayConfigRoutes.GET("/:id", trayConfigController.Get)
+	// TODO: trayConfigRoutes.PUT("/:id", trayConfigController.Update)
+	// TODO: trayConfigRoutes.DELETE("/:id", trayConfigController.Delete)
 	
 	// GrowConfig routes
 	plantRoutes := v1.Group("/plant")

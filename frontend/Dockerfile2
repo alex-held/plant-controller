@@ -1,0 +1,11 @@
+FROM node:12.18.3-alpine3.12 AS JS_BUILD
+EXPOSE 80
+
+WORKDIR build
+COPY ./package*.json ./
+RUN npm install
+
+COPY . .
+RUN npm run build
+
+CMD ng serve --port 80
