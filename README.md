@@ -1,11 +1,15 @@
 # Plant-Controller
 
-![frontend docker shield](https://img.shields.io/docker/v/alexheld/plant-controller-frontend?label=frontend&logo=docker&style=for-the-badge)
-![backend docker shield](https://img.shields.io/docker/v/alexheld/plant-controller-backend?label=backend&logo=docker&style=for-the-badge)
+![Changelog CI Status](https://github.com/alex-held/plant-controller/workflows/auto-changelog/badge.svg)
+![GitHub](https://img.shields.io/github/license/alex-held/template?style=for-the-badge)
+
+![frontend docker shield](https://img.shields.io/docker/v/alexheld/plant-controller-frontend?sort=semver&label=frontend&logo=docker&style=for-the-badge)
+![backend docker shield](https://img.shields.io/docker/v/alexheld/plant-controller-backend?sort=semver&label=backend&logo=docker&style=for-the-badge)
 
 ## Environment setup
 
-You need to have [Go](https://golang.org/),
+You need to have [Go](https://golang.org/),                                                      
+
 [Node.js](https://nodejs.org/),
 [Docker](https://www.docker.com/), and
 [Docker Compose](https://docs.docker.com/compose/)
