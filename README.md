@@ -1,12 +1,17 @@
 # Plant-Controller
+[![Copyright 2021](https://img.shields.io/badge/copyright-2021-blue.svg?maxAge=60&style=flat-square)](https://github.com/alex-held/plant-controller) ![GitHub](https://img.shields.io/github/license/alex-held/template?style=flat-square)
 
-![Changelog CI Status](https://github.com/alex-held/plant-controller/workflows/auto-changelog/badge.svg)
-![GitHub](https://img.shields.io/github/license/alex-held/template?style=for-the-badge)
+[![GitHub](https://img.shields.io/badge/github-issues-red.svg?maxAge=60&style=flat-square)](https://github.com/alex-held/plant-controller/issues) [![GitHub Wiki](https://img.shields.io/badge/github-wiki-181717.svg?maxAge=60&style=flat-square)](https://github.com/alex-held/plant-controller)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/alex-held/plant-controller?logo=GitHub&style=flat-square)          ![Commit Activity](https://img.shields.io/github/commit-activity/m/alex-held/plant-controller?logo=when-i-work&logoColor=white&style=flat-square)
 
-![frontend docker shield](https://img.shields.io/docker/v/alexheld/plant-controller-frontend?sort=semver&label=frontend&logo=docker&style=for-the-badge)
-![backend docker shield](https://img.shields.io/docker/v/alexheld/plant-controller-backend?sort=semver&label=backend&logo=docker&style=for-the-badge)
+![frontend docker shield](https://img.shields.io/docker/v/alexheld/plant-controller-frontend?sort=semver&label=frontend&logo=docker&style=flat-square)
+![backend docker shield](https://img.shields.io/docker/v/alexheld/plant-controller-backend?sort=semver&label=backend&logo=docker&style=flat-square)
+
+
+
 
 ## Environment setup
+
 
 You need to have [Go](https://golang.org/),                                                      
 
