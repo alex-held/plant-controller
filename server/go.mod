@@ -14,10 +14,9 @@ require (
 	github.com/mattn/go-colorable v0.1.8 // indirect
 	github.com/pkg/errors v0.9.1
 	github.com/rs/zerolog v1.20.0
-	go.mongodb.org/mongo-driver v1.4.4
+	go.mongodb.org/mongo-driver v1.5.1
 	golang.org/x/crypto v0.0.0-20201221181555-eec23a3978ad // indirect
 	golang.org/x/net v0.0.0-20201224014010-6772e930b67b // indirect
 	golang.org/x/sync v0.0.0-20201207232520-09787c993a3a // indirect
 	golang.org/x/sys v0.0.0-20210113181707-4bcb84eeeb78 // indirect
-	golang.org/x/text v0.3.5 // indirect
 )
